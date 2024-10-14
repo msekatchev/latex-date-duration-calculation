@@ -1,0 +1,46 @@
+\usepackage{pgf}
+\usepackage{amsmath}
+
+
+\newcommand{\Duration}[2]{%
+    \pgfmathsetmacro{\startYear}{#2}
+    \pgfmathsetmacro{\startMonth}{#1}
+    
+    \pgfmathsetmacro{\currentYear}{\the\year}
+    \pgfmathsetmacro{\currentMonth}{\the\month}
+
+    \pgfmathsetmacro{\years}{\currentYear - \startYear}
+    \pgfmathsetmacro{\months}{\currentMonth - \startMonth}
+    
+    % Adjust if months are negative
+    \if \months<0
+        \pgfmathsetmacro{\years}{\years - 1}
+        \pgfmathsetmacro{\months}{\months + 12}
+    \fi
+
+    % output generation begins below, everything needs to be written without line breaks
+
+    % convert number of years to integer
+    \pgfmathparse{int(\years)}
+    % the result of the above can be used with \pgfmathresult
+    \ifnum\pgfmathresult=0
+    \else
+        \ifnum\pgfmathresult=1
+            1 year
+        \else
+            \pgfmathresult\ years
+        \fi
+    \fi
+    % convert number of months to integer
+    \pgfmathparse{int(\months)}
+    % the result of the above can be used with \pgfmathresult
+    \ifnum\pgfmathresult=0
+    \else
+        \pgfmathparse{int(\months)}
+        \ifnum\pgfmathresult=1
+            1 month
+        \else
+            \pgfmathresult\ months
+        \fi
+    \fi
+}
